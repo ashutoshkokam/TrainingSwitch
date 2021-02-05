@@ -8,11 +8,16 @@ namespace TrainingSwitch
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World - Welcome to Training!");
-            Base b = new Base();
+            Base b1 = new Base();
+            Console.WriteLine(b1.BaseProp);
+            
+            Base b = new Base("ABC");
+            Console.WriteLine(b.BaseProp);
             //I am from Base class Static Constructor
             //I am from Base class Constructor
             Console.WriteLine("===============================");
-            Derived d = new Derived();
+            Derived d = new Derived("D_ABC");
+            Console.WriteLine(d.BaseProp);
             //I am from Derived class Static Constructor
             //I am from Base class Constructor
             //I am from Derived class Constructor
@@ -61,8 +66,8 @@ namespace TrainingSwitch
             Console.WriteLine(s);//Immutable_TEST
 
             int[] arr = new int[5];
-            int[] arr_1;
-
+            //int[] arr_1;
+            
             ArrayList array = new ArrayList();
             Console.WriteLine(array);
             Console.WriteLine(arr.Length);
@@ -93,6 +98,15 @@ namespace TrainingSwitch
         public Base()
         {
             Console.WriteLine("I am from Base class Constructor");
+        }
+        private Base(int a)
+        {
+            Console.WriteLine("I am from Base class Constructor");
+        }
+        public Base(string baseProp)
+        {
+            this.BaseProp = baseProp;
+            Console.WriteLine("I am from Base class Parameterized Constructor");
         }
         public string BaseProp { get; set; }
 
@@ -130,9 +144,13 @@ namespace TrainingSwitch
         {
             Console.WriteLine("I am from Derived class Static Constructor");
         }
-        public Derived()
+        public Derived(string baseProp):base(baseProp)
         {
-            Console.WriteLine("I am from Derived class Constructor");
+            Console.WriteLine("I am from Derived class PAameterixed Constructor");
+        }
+        public Derived():base()
+        {
+            Console.WriteLine("I am from Derived class  Constructor");
         }
         public new void Display()
         {
