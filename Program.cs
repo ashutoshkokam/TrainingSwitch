@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TrainingSwitch;
 
 namespace TrainingSwitch
 {
@@ -76,6 +77,12 @@ namespace TrainingSwitch
             Factorial factorial = new Factorial(7);
             factorial.Print( factorial.CalculateSeries());
 
+            Console.WriteLine("============Extension Methods===================");
+            string desc = "Take the next step in your career at ABB, working in a team that is dedicated to creating a future where innovative digital technologies allow greater access to cleaner energy.";
+            string trimmedDesc = desc.TrimDesc(25);
+            Console.WriteLine(trimmedDesc);
+            Console.WriteLine(desc.GetWordCount());
+            Console.WriteLine(trimmedDesc.GetWordCount());
         }
         public static void ModifyString( string s) 
         {
@@ -90,17 +97,20 @@ namespace TrainingSwitch
     public class Base
     {
         const int c=0;
-        readonly int r;
+        readonly int r=10;
         static Base()
         {
+          
             Console.WriteLine("I am from Base class Static Constructor");
         }
         public Base()
         {
+            r = 20;
             Console.WriteLine("I am from Base class Constructor");
         }
         private Base(int a)
         {
+          
             Console.WriteLine("I am from Base class Constructor");
         }
         public Base(string baseProp)
