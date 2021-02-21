@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections;
 using TrainingSwitch;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using TrainingSwitch.Functionalities;
+using Microsoft.Extensions.Logging;
 
 namespace TrainingSwitch
 {
@@ -9,6 +13,24 @@ namespace TrainingSwitch
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World - Welcome to Training!");
+
+
+            //setup our DI
+            var serviceProvider = new ServiceCollection()
+                .AddLogging()
+                .AddTransient<IFactorial, Factorial>()
+                 .AddTransient<IPrimeNumbers, PrimeNumbers>()
+
+                .BuildServiceProvider();
+
+            //configure console logging
+            serviceProvider.GetService<ILoggerFactory>();
+
+            var logger = serviceProvider.GetService<ILoggerFactory>()
+            .CreateLogger<Program>();
+            logger.LogDebug("Starting application");
+
+
             Base b1 = new Base();
             Console.WriteLine(b1.BaseProp);
 
@@ -74,8 +96,8 @@ namespace TrainingSwitch
             Console.WriteLine(arr.Length);
             //Console.WriteLine(arr_1.Length);
 
-            Factorial factorial = new Factorial(7);
-            factorial.Print(factorial.CalculateSeries());
+            Factorial factorial = new Factorial();
+            factorial.Print(factorial.CalculateSeries(7));
 
             Console.WriteLine("============Extension Methods===================");
             string desc = "Take the next step in your career at ABB, working in a team that is dedicated to creating a future where innovative digital technologies allow greater access to cleaner energy.";
@@ -98,6 +120,7 @@ namespace TrainingSwitch
             Console.WriteLine("============Pair Finder Optimal===================");
             findPairs.PairFinderOptimal(arrNumbers, finalValue);
 
+            Console.WriteLine("============Board===================");
 
             string[] words = { "oath", "pea", "eat", "rain","kat" };
             char[,] board = {
@@ -110,7 +133,46 @@ namespace TrainingSwitch
             System.Collections.Generic.IList<string> ans = wordBoard.FindWords(board, words);
             foreach (var item in ans)
                 Console.WriteLine(item);
+
+            Console.WriteLine("============FizzBuzz===================");
+            FizzBuzz fizzBuzz = new FizzBuzz();
+            fizzBuzz.Print();
+
+            Console.WriteLine("============Missing Number===================");
+            int[] a = { 1, 2, 4, 5, 6 };
+            MissingNumber missingNumber = new MissingNumber(a);
+            Console.WriteLine($"Missing NUmber : {missingNumber.GetMissingNumber()}");
+
+            Console.WriteLine("============Prime Number===================");
+            PrimeNumbers primeNumbers = new PrimeNumbers();
+            primeNumbers.PrintPrimeNumbers(100);
+
+            Console.WriteLine("============Binary Search===================");
+            int[] arrSearch = { 1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            BinarySearch binarySearch = new BinarySearch(arrSearch);
+            binarySearch.SearchNumber(7);
+            binarySearch.SearchNumber(99);
+
+            Console.WriteLine("============Linear Search===================");
+            int[] arrSearchLinear = { 1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+            LinearSearch linearSearch = new LinearSearch(arrSearchLinear);
+            linearSearch.SearchNumber(14);
+            linearSearch.SearchNumber(99);
+
+            Console.WriteLine("============Sorting Algo===================");
+            int[] arrSort = {64, 34, 25,12, 22, 11, 90};
+            SortingAlgo sortingAlgo = new SortingAlgo(arrSort);
+            sortingAlgo.BubbleSort();
+
+            Console.WriteLine("============Factorial Digit Sum===================");
+            FactorialDigitSum factorialDigitSum = new FactorialDigitSum(serviceProvider.GetService<IFactorial>());
+            factorialDigitSum.CalculateFactorialDigitSum(100);
             
+                Console.WriteLine("============Prime Summation===================");
+            PrimeSummation primeSummation = new PrimeSummation(serviceProvider.GetService<IPrimeNumbers>());
+            primeSummation.PrimeSeriesSummation(2000000);
+
+
         }
         public static void ModifyString( string s) 
         {
