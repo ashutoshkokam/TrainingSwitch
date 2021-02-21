@@ -10,7 +10,7 @@ namespace TrainingSwitch
 {
     class Program
     {
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
             Console.WriteLine("Hello World - Welcome to Training!");
 
@@ -170,8 +170,15 @@ namespace TrainingSwitch
             
                 Console.WriteLine("============Prime Summation===================");
             PrimeSummation primeSummation = new PrimeSummation(serviceProvider.GetService<IPrimeNumbers>());
-            primeSummation.PrimeSeriesSummation(2000000);
+            primeSummation.PrimeSeriesSummation(2_000_000);
 
+            Console.WriteLine("============SmallestMultiple===================");
+            SmallestMultiple smallestMultiple = new SmallestMultiple();
+            int n = 10;
+            var res =  smallestMultiple.SmallestMultipleNumber(n);
+            Console.WriteLine($"Smallest multiple of {n} is {Convert.ToInt32( res.Result)}");
+
+            Console.WriteLine("============SmallestMultiple END===================");
 
         }
         public static void ModifyString( string s) 
