@@ -180,6 +180,9 @@ namespace TrainingSwitch
 
             Console.WriteLine("============SmallestMultiple END===================");
 
+            AlienEarth alienEarth = new AlienEarth();
+            int[] arrEarth = { 5, 9, 8, 7, 16 };
+            alienEarth.Calculate(5, arrEarth, 3);
         }
         public static void ModifyString( string s) 
         {
