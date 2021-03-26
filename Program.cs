@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TrainingSwitch.Functionalities;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace TrainingSwitch
 {
@@ -78,7 +79,7 @@ namespace TrainingSwitch
             //sring immutability
             Console.WriteLine("===============================");
             string s = "Test";
-
+            //string s;
             Console.WriteLine(s);
 
 
@@ -183,6 +184,60 @@ namespace TrainingSwitch
             AlienEarth alienEarth = new AlienEarth();
             int[] arrEarth = { 5, 9, 8, 7, 16 };
             alienEarth.Calculate(5, arrEarth, 3);
+
+            Console.WriteLine("============BalancedBrackets===================");
+
+            BalancedBrackets balancedBrackets = new BalancedBrackets();
+            Console.WriteLine($"BALANCED : {balancedBrackets.IsBalanced("{[()]}")}");
+            Console.WriteLine($"BALANCED : {balancedBrackets.IsBalanced("{[(])}")}");
+            Console.WriteLine($"BALANCED : {balancedBrackets.IsBalanced("{{[[(())]]}}")}");
+
+            try
+            {
+                int j = 100;
+                int i = 0;
+                int k = j / i;
+            }
+            catch (DivideByZeroException exD)
+            {
+                //If i take this down it will guve me compiler error
+                Console.WriteLine("DivideByZero Exception" + exD.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("General Exception"+ex.Message);
+            }
+
+            MaximumOfMinimum maximumOfMinimum = new MaximumOfMinimum();
+            List<int> listNumbers = new List<int> { 2, 4, 5, 6, 8 };
+            //245 2
+            //456 4
+            //568 5
+            //5
+            int maxofMin = maximumOfMinimum.GetMaximumOfMinimum(listNumbers,3);
+            Console.WriteLine(maxofMin);
+
+
+            C objC = new A() as C; //Base can not be casted into derived
+
+
+            A objA = new C();//Derived can be casted into base
+
+            B objB = new C();//Derived can be casted into base
+
+            objA.Add(5,6);// Refers to A class Add Method
+            objB.Add(10, 20); // Refers to B class Add Method
+
+            //Array Clone vs Copy
+            string[] arrString = { "Web", "World" };
+            string[] clonedString = arrString.Clone() as string[];//returns object, needs casting, creates shallow copy
+
+            string[] copyToStringArr = new string[2];
+            arrString.CopyTo(copyToStringArr,0);//return void, copies array into destination , accpets index, creates shallow copy
+            
+
+            Console.WriteLine("END");
+
         }
         public static void ModifyString( string s) 
         {
@@ -224,6 +279,19 @@ namespace TrainingSwitch
         {
             Console.WriteLine("Base:Display()");
         }
+
+        public void Add(int a, int b)
+        {
+            Console.WriteLine($"Method Overloading Add(int,int): {a+b}");
+        }
+        public void Add(Int16 a, Int16 b)
+        {
+            Console.WriteLine($"Method Overloading Add(): {a + b}");
+        }
+        //public void Add(object a, object b)
+        //{
+        //    Console.WriteLine($"Method Overloading Add(): {a + b}");
+        //}
 
         public int Test()
         {
@@ -269,6 +337,28 @@ namespace TrainingSwitch
         public override void Print()
         {
             Console.WriteLine("Derived:Print()");
+        }
+    }
+
+    public class A
+    {
+        public int Add(int a ,int b)
+        {
+            return a + b;
+        }
+    }
+    public class B:A
+    {
+        public  int Add(int a, int b)
+        {
+            return a + b;
+        }
+    }
+    public class C : B
+    {
+        public  int Add(int a, int b)
+        {
+            return a + b;
         }
     }
 

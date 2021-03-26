@@ -37,12 +37,7 @@ namespace TrainingSwitch
             PerformRecursiveBubbleSort(length-1);
         }
 
-        private void Swap(int i)
-        {
-            int temp = _arr[i];
-            _arr[i] = _arr[i + 1];
-            _arr[i + 1] = temp;
-        }
+       
 
         private void PrintArrayElements()
         {
