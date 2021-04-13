@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using TrainingSwitch.Functionalities;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TrainingSwitch
 {
@@ -234,8 +235,11 @@ namespace TrainingSwitch
 
             string[] copyToStringArr = new string[2];
             arrString.CopyTo(copyToStringArr,0);//return void, copies array into destination , accpets index, creates shallow copy
-            
 
+            String str = "mysamplestring";
+            StringBuilder stringBuilder = new StringBuilder(str);
+
+            Console.WriteLine(str.Equals(stringBuilder));//False
             Console.WriteLine("END");
 
         }
