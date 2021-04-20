@@ -7,6 +7,7 @@ using TrainingSwitch.Functionalities;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace TrainingSwitch
 {
@@ -14,6 +15,7 @@ namespace TrainingSwitch
     {
         static  void Main(string[] args)
         {
+            
             Console.WriteLine("Hello World - Welcome to Training!");
 
 
@@ -32,6 +34,7 @@ namespace TrainingSwitch
             .CreateLogger<Program>();
             logger.LogDebug("Starting application");
 
+          
 
             Base b1 = new Base();
             Console.WriteLine(b1.BaseProp);
@@ -44,6 +47,7 @@ namespace TrainingSwitch
             Derived d = new Derived("D_ABC");
             Console.WriteLine(d.BaseProp);
             //I am from Derived class Static Constructor
+            //I am from Base class Static Constructor
             //I am from Base class Constructor
             //I am from Derived class Constructor
             Console.WriteLine("===============================");
@@ -240,6 +244,16 @@ namespace TrainingSwitch
             StringBuilder stringBuilder = new StringBuilder(str);
 
             Console.WriteLine(str.Equals(stringBuilder));//False
+
+            using (Base b3 = new Base())
+            {
+                Console.WriteLine("Inside b3 using");
+            }
+
+            using (Logger loggerUsing = new Logger())
+            {
+                Console.WriteLine("Inside loggerUsing using");
+            }
             Console.WriteLine("END");
 
         }
@@ -253,7 +267,7 @@ namespace TrainingSwitch
         }
     }
 
-    public class Base
+    public class Base:IDisposable
     {
         const int c=0;
         readonly int r=10;
@@ -288,9 +302,10 @@ namespace TrainingSwitch
         {
             Console.WriteLine($"Method Overloading Add(int,int): {a+b}");
         }
+       
         public void Add(Int16 a, Int16 b)
         {
-            Console.WriteLine($"Method Overloading Add(): {a + b}");
+            Console.WriteLine($"Method Overloading Add(Int16,Int16): {a + b}");
         }
         //public void Add(object a, object b)
         //{
@@ -317,6 +332,14 @@ namespace TrainingSwitch
         public virtual void Print()
         {
             Console.WriteLine("Base:Print()");
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);//  Requests that the common language runtime not call the finalizer for the specified
+            //I am taking care of it
+            
+            Console.WriteLine("Dispose Called");
         }
     }
     public class Derived:Base
@@ -353,7 +376,7 @@ namespace TrainingSwitch
     }
     public class B:A
     {
-        public  int Add(int a, int b)
+        public new int Add(int a, int b)
         {
             return a + b;
         }
@@ -366,5 +389,26 @@ namespace TrainingSwitch
         }
     }
 
+
+    public class Logger : IDisposable
+    {
+        private readonly StreamWriter _streamWriter;
+        public Logger()
+        {
+            _streamWriter = new StreamWriter("logfile.txt");
+        }
+        public void WriteToLog(string text)
+        {
+            _streamWriter.WriteLine(text);
+        }
+        public void Dispose()
+        {
+            Console.WriteLine("Disposing Logger");
+            GC.SuppressFinalize(this);
+
+            _streamWriter.Dispose();
+            Console.WriteLine("Disposed Logger");
+        }
+    }
 
 }
